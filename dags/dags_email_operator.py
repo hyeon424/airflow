@@ -1,9 +1,9 @@
-from airflow import DAG
+from airflow.sdk import DAG
 
 import pendulum
 import datetime
 
-from airflow.operators.email import EmailOperator
+from airflow.providers.smtp.operators.smtp import EmailOperator
 
 
 
