@@ -9,7 +9,8 @@ from airflow.providers.standard.operators.bash import BashOperator
 
 with DAG(
     dag_id="dags_bash_with_macro_ex1",
-    schedule="10 0 L * *",
+    # schedule="10 0 L * *",
+    schedule="10 0 1 * *",  # 매월 1일
     start_date=pendulum.datetime(2025, 1, 1, tz="Asia/Seoul"),
     catchup=True,
 ) as dag:
@@ -17,8 +18,13 @@ with DAG(
     bash_task_1 = BashOperator(
         task_id="bash_task_1",
         env={
-            "START_DATE": "{{ (data_interval_start.in_timezone('Asia/Seoul') - macros.dateutil.relativedelta.relativedelta(months=1, days=1)) | ds }}",
-            "END_DATE": "{{ (data_interval_end.in_timezone('Asia/Seoul') - macros.dateutil.relativedelta.relativedelta(days=1)) | ds }}"
+            # "START_DATE": "{{ (data_interval_start.in_timezone('Asia/Seoul') - macros.dateutil.relativedelta.relativedelta(months=1, days=1)) | ds }}",
+            # "END_DATE": "{{ (data_interval_end.in_timezone('Asia/Seoul') - macros.dateutil.relativedelta.relativedelta(days=1)) | ds }}"
+
+            # 전월 1일 = data_interval_start (월간 스케줄의 시작)
+            "START_DATE": "{{ (data_interval_start.in_timezone('Asia/Seoul')) | ds }}",
+            # 전월 말일 = data_interval_end - 1일
+            "END_DATE": "{{ (data_interval_end.in_timezone('Asia/Seoul') - macros.timedelta(days=1)) | ds }}",
         },
         bash_command="echo \"START_DATE: $START_DATE\" && echo \"END_DATE: $END_DATE\""
     )
