@@ -24,7 +24,7 @@ with DAG(
 
     @task(task_id="task_direct_cal")
     def get_datetime_calc(**kwargs):
-        from dateutil.relativedelta import relativedelta
+        from dateutil.relativedelta import relativedelta # 스케쥴러 부하 경감을 위하여 task decorator 안에 실행시키도록 함
 
         data_interval_end = kwargs.get('data_interval_end')
         prev_month_day_first = data_interval_end.in_timezone('Asia/Seoul') + relativedelta(months=-1, day=1)
