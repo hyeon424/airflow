@@ -18,8 +18,8 @@ with DAG(
     bash_task_2 = BashOperator(
         task_id="bash_task_2",
         env={
-                "START_DATE": "{{(macros.pendulum.instance(dag_run.logical_date).in_timezone('Asia/Seoul')- macros.dateutil.relativedelta.relativedelta(weeks=2)- macros.timedelta(days=5)) | ds}}",
-                "END_DATE": "{{(macros.pendulum.instance(dag_run.logical_date).in_timezone('Asia/Seoul')- macros.dateutil.relativedelta.relativedelta(weeks=2)) | ds}}",
+            "START_DATE": "{{ (data_interval_start.in_timezone('Asia/Seoul') - macros.dateutil.relativedelta.relativedelta(weeks=2) - macros.dateutil.relativedelta.relativedelta(days=5)) | ds }}",
+            "END_DATE": "{{ (data_interval_end.in_timezone('Asia/Seoul') - macros.dateutil.relativedelta.relativedelta(weeks=2)) | ds }}"
         },
         bash_command="echo \"START_DATE: $START_DATE\" && echo \"END_DATE: $END_DATE\""
     )
