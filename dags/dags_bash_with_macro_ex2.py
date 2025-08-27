@@ -18,16 +18,18 @@ with DAG(
     bash_task_2 = BashOperator(
         task_id="bash_task_2",
         env={
-            "START_DATE": "{{ ( (dag_run.logical_date.in_timezone('Asia/Seoul')\
-                                 - macros.dateutil.relativedelta.relativedelta(weeks=2))\
-                                 - macros.timedelta(days=(dag_run.logical_date.in_timezone('Asia/Seoul')\
-                                                          - macros.dateutil.relativedelta.relativedelta(weeks=2)).weekday())\
-                               ) | ds }}",
-            "END_DATE": "{{ ( ( (dag_run.logical_date.in_timezone('Asia/Seoul')\
-                                  - macros.dateutil.relativedelta.relativedelta(weeks=2))\
-                                  - macros.timedelta(days=(dag_run.logical_date.in_timezone('Asia/Seoul')\
-                                                           - macros.dateutil.relativedelta.relativedelta(weeks=2)).weekday())\
-                               ) + macros.timedelta(days=5) ) | ds }}",
+            # START_DATE: (KST 기준) 2주 전 '그 주의 월요일'
+            "START_DATE": "{{((macros.pendulum.instance(dag_run.logical_date).in_timezone('Asia/Seoul')\
+                               - macros.dateutil.relativedelta.relativedelta(weeks=2))\
+                                   - macros.timedelta(days=(macros.pendulum.instance(dag_run.logical_date).in_timezone('Asia/Seoul')\
+                                       - macros.dateutil.relativedelta.relativedelta(weeks=2)).weekday())) | ds}}",
+
+            # END_DATE: (KST 기준) 2주 전 '그 주의 토요일' = 위 월요일 + 5일
+            "END_DATE": "{{((macros.pendulum.instance(dag_run.logical_date).in_timezone('Asia/Seoul')\
+                            - macros.dateutil.relativedelta.relativedelta(weeks=2))\
+                                - macros.timedelta(days=(macros.pendulum.instance(dag_run.logical_date).in_timezone('Asia/Seoul')\
+                                    - macros.dateutil.relativedelta.relativedelta(weeks=2)).weekday())\
+                                        + macros.timedelta(days=5)) | ds}}",
         },
         bash_command="echo \"START_DATE: $START_DATE\" && echo \"END_DATE: $END_DATE\""
     )
