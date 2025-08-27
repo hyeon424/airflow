@@ -18,15 +18,15 @@ with DAG(
     bash_task_2 = BashOperator(
         task_id="bash_task_2",
         env={
-            "START_DATE": "{{ ( (dag_run.logical_date.in_timezone('Asia/Seoul')
-                                 - macros.dateutil.relativedelta.relativedelta(weeks=2))
-                                 - macros.timedelta(days=(dag_run.logical_date.in_timezone('Asia/Seoul')
-                                                          - macros.dateutil.relativedelta.relativedelta(weeks=2)).weekday())
+            "START_DATE": "{{ ( (dag_run.logical_date.in_timezone('Asia/Seoul')\
+                                 - macros.dateutil.relativedelta.relativedelta(weeks=2))\
+                                 - macros.timedelta(days=(dag_run.logical_date.in_timezone('Asia/Seoul')\
+                                                          - macros.dateutil.relativedelta.relativedelta(weeks=2)).weekday())\
                                ) | ds }}",
-            "END_DATE": "{{ ( ( (dag_run.logical_date.in_timezone('Asia/Seoul')
-                                  - macros.dateutil.relativedelta.relativedelta(weeks=2))
-                                  - macros.timedelta(days=(dag_run.logical_date.in_timezone('Asia/Seoul')
-                                                           - macros.dateutil.relativedelta.relativedelta(weeks=2)).weekday())
+            "END_DATE": "{{ ( ( (dag_run.logical_date.in_timezone('Asia/Seoul')\
+                                  - macros.dateutil.relativedelta.relativedelta(weeks=2))\
+                                  - macros.timedelta(days=(dag_run.logical_date.in_timezone('Asia/Seoul')\
+                                                           - macros.dateutil.relativedelta.relativedelta(weeks=2)).weekday())\
                                ) + macros.timedelta(days=5) ) | ds }}",
         },
         bash_command="echo \"START_DATE: $START_DATE\" && echo \"END_DATE: $END_DATE\""
