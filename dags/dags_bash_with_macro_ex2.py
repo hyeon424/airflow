@@ -9,8 +9,8 @@ from airflow.providers.standard.operators.bash import BashOperator
 
 with DAG(
     dag_id="dags_bash_with_macro_ex2",
-    # schedule="10 0 * * 6#2",
-    schedule="10 0 1 * *",
+    schedule="10 0 * * 6#2",
+    # schedule="10 0 1 * *",
     start_date=pendulum.datetime(2025, 1, 1, tz="Asia/Seoul"),
     catchup=True,
 ) as dag:
