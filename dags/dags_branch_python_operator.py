@@ -2,7 +2,7 @@ import pendulum
 
 from airflow.sdk import DAG, task
 from airflow.providers.standard.operators.python import PythonOperator
-from airflow.providers.standard.operators.branch import BranchPythonOperator
+from airflow.providers.standard.operators.python import BranchPythonOperator
 
 
 with DAG(
