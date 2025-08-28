@@ -9,7 +9,7 @@ from airflow.exceptions import AirflowException
 
 
 with DAG(
-    dag_id="dags_python_with_trigger_rule_ex1",
+    dag_id="dags_python_with_trigger_rule_ex2",
     schedule=None,
     start_date=pendulum.datetime(2025, 1, 1, tz="Asia/Seoul"),
     catchup=False,
