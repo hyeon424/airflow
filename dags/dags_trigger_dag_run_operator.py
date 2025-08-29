@@ -27,7 +27,7 @@ with DAG(
         task_id='trigger_dag_task', # 필수 값
         trigger_dag_id='dags_python_operator', # 필수 값
         trigger_run_id=None, # run_id 값 직접 지정
-        execution_date='{{ data_interval_start }}', # manual__{{execution_date}}로 수행
+        logical_date='{{ data_interval_start }}', # manual__{{execution_date}}로 수행
         reset_dag_run=True, # 이미 run_id에 값이 있는 경우에도 재수행 할 것인지에 대한 유무
         wait_for_completion=False,
         poke_interval=60,
