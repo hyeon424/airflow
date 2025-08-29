@@ -19,7 +19,7 @@ with DAG(
     @task_group(group_id='first_group')
     def group_1():
         # task_group 데커레이터를 이용한 첫 번째 그룹
-        @task(task_id='inner_fucntion_1')
+        @task(task_id='inner_function_1')
         def inner_func1(**kwargs):
             print('첫 번째 TaskGroup 내 첫 번째 task입니다.')
         
