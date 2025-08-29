@@ -18,7 +18,7 @@ with DAG(
         
     @task_group(group_id='first_group')
     def group_1():
-        # task_group 데커레이터를 이용한 첫 번째 그룹
+        """ task_group 데커레이터를 이용한 첫 번째 그룹 """
         @task(task_id='inner_function_1')
         def inner_func1(**kwargs):
             print('첫 번째 TaskGroup 내 첫 번째 task입니다.')
@@ -32,7 +32,7 @@ with DAG(
         inner_func1() >> inner_func2
         
     with TaskGroup(group_id='second_group', tooltip='두 번째 TaskGroup입니다.') as group_2:
-        # 이곳에 작성한 docstring은 표시되지 않습니다.
+        """ 이곳에 작성한 docstring은 표시되지 않습니다. """
         @task(task_id='inner_function_1')
         def inner_func1(**kwargs):
             print('두 번째 TaskGroup 내 첫 번째 task입니다.')
